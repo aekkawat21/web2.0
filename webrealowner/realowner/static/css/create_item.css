@@ -1,0 +1,81 @@
+/* Basic reset for any default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Style for the overall body */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Light gray background */
+    padding: 20px;
+  }
+  
+  /* Centering the form on the page */
+  form {
+    max-width: 600px; /* Adjust width according to your design needs */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* White background for the form */
+    border-radius: 8px; /* Rounded corners for the form */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow around the form */
+  }
+  
+  /* Style for the form heading */
+  h1 {
+    text-align: center;
+    color: #333; /* Dark grey color for the text */
+    margin-bottom: 20px;
+  }
+  
+  /* Style for each form field */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    width: calc(100% - 22px); /* Full width minus padding */
+    padding: 10px;
+    margin-bottom: 15px; /* Space between fields */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 4px; /* Slightly rounded borders for the input fields */
+  }
+  
+  /* Style for the form submission button */
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #888; /* Grey background */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for the back link */
+  a {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333; /* Dark grey color matching the heading */
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  /* Additional media query to handle responsiveness */
+  @media (max-width: 768px) {
+    form {
+        padding: 10px;
+    }
+  
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    button[type="submit"] {
+        width: calc(100% - 20px); /* Adjust width for mobile */
+    }
+  }
+  

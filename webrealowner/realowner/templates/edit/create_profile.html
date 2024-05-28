@@ -1,0 +1,62 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Profile</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/create_profile.css' %}">
+</head>
+<body>
+
+<div class="header">
+  <a href="{% url 'profile' %}">The Real Owner</a>
+  <h2>บัญชี</h2>
+</div>
+
+<div class="card-container">
+  <div class="card">
+    <h3>รายละเอียดส่วนตัว</h3>
+    <strong>ชื่อ:</strong> {{ profile.name}}<br>
+    <div class="info">
+      <strong>อายุ:</strong> {{ profile.age }}<br>
+      <strong>เพศ:</strong> {{ profile.gender }}<br>
+      </div>
+      <a href="{% url 'edit_personal_details' %}">แก้ไข</a>
+    
+  </div>
+  <div class="card">
+    <h3>อีเมล์</h3>
+    <strong>อีเมล:</strong> {{ profile.user.email }}<br>
+    <a href="{% url 'edit_email' %}">แก้ไข</a>
+  </div>
+  <div class="card">
+    <h3>ช่องทางติดต่อ</h3>
+    <strong>หมายเลขโทรศัพท์:</strong> {{ profile.phone_number }}<br>
+    <a href="{% url 'edit_contact_channels' %}">แก้ไข</a>
+  </div>
+  <div class="card">
+    <h3>แก้ไขรหัสผ่าน</h3>
+    <strong>รหัสผ่านใหม่</strong> {{ profile.password }}<br>
+    <a href="{% url 'edit_password' %}">แก้ไข</a>
+  </div>
+</div>
+
+
+
+{% if profile.picture %}
+    <img src="{{ profile.picture.url }}" alt="Profile picture">
+{% else %}
+    <img src="{% static 'images/default-profile-picture.jpg' %}" alt="Default profile picture">
+{% endif %}
+<a class="circle" href="{% url 'edit_profile' %}"> แก้ไข </a>
+    
+    
+    
+      
+  </div> 
+</body>
+</html>
+
+{% endblock %}

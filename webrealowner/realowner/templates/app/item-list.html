@@ -1,0 +1,41 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'item_list.css' %}">
+
+{% block content %}
+<a href="{% url 'profile' %}">{{ ct }}</a>
+
+<div class="items-list">
+  {% for item in items %}
+    <div class="item-card">
+      <div class="item-image">
+        {% if item.image %}
+          <img src="{{ item.image.url }}" alt="{{ item.model }}">
+        {% else %}
+          <div class="placeholder"></div>
+        {% endif %}
+      </div>
+      <div class="item-details">
+        <h3>{{ item.brand }}</h3>
+        <p>Model: {{ item.model }}</p>
+        <p>Serial: {{ item.serial_number }}</p>
+        <p>Color: {{ item.color }}</p>
+        <p>Category: {{ item.category.name }}</p>
+        <h1>ประวัติ</h1>
+        <p>Store Date of Purchase: {{ item.store_date_of_purchase }}</p>
+        <p>Store of Purchase: {{ item.store_of_purchase }}</p>
+        <p>Warranty: {{ item.warranty }}</p>
+        <p>Previous Owner: {{ item.previous_owner }}</p>
+        <p>Description: {{ item.description }}</p>
+
+        {% for owner in item.previous_owners.all %}
+          <p>{{ owner.user.username }}</p>
+        {% endfor %}      
+      </div>
+      <a class="edit-button" href="{% url 'edit_item' item.id %}">แก้ไข</a>
+      <a href="{% url 'profile' %}">ย้อนกลับ</a>
+    </div>
+  {% empty %}
+    <p>คุณยังไม่มีไอเท็มที่ลงทะเบียน.</p>
+  {% endfor %}
+</div>
+{% endblock %}

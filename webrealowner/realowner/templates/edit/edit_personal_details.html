@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รายละเอียดส่วนตัว</title>
+<style>
+  body { font-family: Arial, sans-serif; }
+  .container { width: 300px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+  label { display: block; margin-top: 10px; }
+  input[type="text"], input[type="number"] { width: 100%; padding: 8px; margin-top: 5px; }
+  .gender-options { margin-top: 5px; }
+  button { padding: 10px 15px; margin-top: 10px; }
+</style>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+<div class="container">
+  <h2>รายละเอียดส่วนตัว</h2>
+   {{ profile_form }}
+
+  <button type="submit">บันทึก</button>
+</div>
+
+</form>
+</body>
+</html>
+

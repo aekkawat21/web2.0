@@ -1,0 +1,20 @@
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/edit_item.css' %}">
+  <h1>แก้ไขไอเท็ม</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save changes</button>
+  </form>
+
+  <h2>Current Owner: {{ item.current_owner.user.username }}</h2>
+  <h3>Previous Owners</h3>
+  <ul>
+    {% for owner in item.previous_owners.all %}
+      <li>{{ owner.user.username }}</li>
+    {% endfor %}
+</ul>
+
+  <a href="{% url 'transfer_item' %}" class="button">Transfer Item Ownership</a>
+{% endblock %}

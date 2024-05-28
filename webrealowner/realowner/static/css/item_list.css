@@ -1,0 +1,72 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    line-height: 1.6;
+  }
+  
+  /* Content Styles */
+  .items-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Spacing between items */
+    padding: 20px;
+  }
+  
+  .item-card {
+    background: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    width: calc(33.333% - 20px); /* Three items per row with gap adjustment */
+    margin-bottom: 20px; /* Spacing between rows */
+  }
+  
+  .item-image img,
+  .item-image .placeholder {
+    width: 100%;
+    height: 200px; /* Fixed height or use object-fit */
+    background: #ddd; /* Placeholder background */
+  }
+  
+  /* If no image is provided, show a placeholder */
+  .placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    color: #bbb;
+  }
+  
+  .item-details {
+    padding: 15px;
+    color: #333;
+  }
+  
+  .item-details h3 {
+    margin-bottom: 5px;
+  }
+  
+  .item-details p {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+  }
+  
+  .edit-button {
+    display: block;
+    text-align: center;
+    background: #007bff;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+  }
+  
+  /*
+  

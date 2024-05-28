@@ -1,0 +1,27 @@
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}" type="text/css">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div>
+  <h2>Register</h2>
+  <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ forms.as_p }}
+    <button type="submit">ยืนยัน</button>
+    <button type="button" onclick="history.back()">ย้อนกลับ</button>
+  </form>
+</div>
+
+<div class="right">
+  <section class="welcome">
+    <h1>The Real Owner</h1>
+    <p>Welcome to you.</p>
+  </section>
+</div>
+
+{% endblock %}

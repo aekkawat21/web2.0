@@ -1,0 +1,91 @@
+{% load static %}
+
+{% block content %}
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+<div class="min-h-screen flex">
+
+
+  <div class="w-1/4 p-4 flex flex-col items-center justify-between min-h-screen bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc]">
+    <div class="flex flex-col items-center">
+      <div class="icon rounded-full h-20 w-20 mb-4 overflow-hidden">
+        {% if profile.picture %}
+          <img src="{{ profile.picture.url }}" alt="Profile picture" class="rounded-full h-full w-full object-cover">
+        {% else %}
+          <img src="{% static 'images/default-profile-picture.jpg' %}" alt="Default profile picture" class="rounded-full h-full w-full object-cover">
+        {% endif %}
+      </div>
+      <h3 class="font-bold text-gray-700 text-center mb-2">{{ profile.user }}</h3>
+      <p class="text-gray-700 text-center mb-4">{{ profile.user.email }}</p>
+    </div>
+    <div class="flex flex-col items-center">
+      <a href="{% url 'create_profile' %}" class="text-blue-600 hover:text-blue-800">My account</a>
+    </div>
+    <div class="w-full">
+      <form method="post" action="{% url 'home' %}">
+        {% csrf_token %}
+        
+        <button type="submit" class="bg-gradient-to-r from-[#e0c3fc] hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-full">Logout</button>
+      </form>
+    </div>
+  </div>
+  <div class="flex flex-col items-center">
+    <p class="text-gray-700">จำนวนไอเท็มที่โอนย้ายไปยังผู้ใช้งานใหม่: {{ profile.transferred_items_count }}</p>
+</div>
+
+  <div class="w-3/4 p-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+
+      <a href="/item-list/Phone/" class="">
+      <div class="bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc] hover:scale-105  rounded p-4 flex flex-col items-center bo">
+        <div class="icon bg-white rounded-full h-16 w-16 mb-2"></div>
+        <div class=" mt-2 mb-2 text-gray-700">phone</div>
+      </div>
+    </a>
+      
+       <a href="/item-list/Laptop/" class="">
+      <div class=" bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc] hover:scale-105  rounded p-4 flex flex-col items-center">
+        <div class="icon bg-white rounded-full h-16 w-16 mb-2"></div>
+        <div class=" mt-2 mb-2 text-gray-700" >Laptop</div>
+      </div>
+      </a>
+
+      <a href="/item-list/Notebook/" class="">
+      <div class=" bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc] hover:scale-105  rounded p-4 flex flex-col items-center">
+        <div class="icon bg-white rounded-full h-16 w-16 mb-2"></div>
+        <div class="name mt-2 mb-2 text-gray-700" >Notebook</div>
+      </div>
+      </a>
+
+      <a href="/item-list/Earphones/" class="">
+      <div class=" bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc] hover:scale-105  rounded p-4 flex flex-col items-center">
+        <div class="icon bg-white rounded-full h-16 w-16 mb-2"></div>
+        <div class="name mt-2 mb-2 text-gray-700" >Earphones</div>
+      </div>
+      </a>
+
+      <a href="/item-list/clock/" class="">
+      <div class=" bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc] hover:scale-105  rounded p-4 flex flex-col items-center">
+        <div class="icon bg-white rounded-full h-16 w-16 mb-2"></div>
+        <div class="name mt-2 mb-2 text-gray-700" >clock</div>
+      </div>
+      </a>
+
+      <a href="/item-list/keyboard/" class="">
+      <div class=" bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc] hover:scale-105 rounded p-4 flex flex-col items-center">
+        <div class="icon bg-white rounded-full h-16 w-16 mb-2"></div>
+        <div class="name mt-2 mb-2 text-gray-700" >keyboard</div>
+      </div>
+      </a>
+
+      
+      <div class=" bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc] hover:scale-105  rounded p-4 flex justify-center items-center w-full h-full">
+        <a href="{% url 'create_item' %}" class="text-gray-700 text-4xl">+</a>
+      </div>
+      </a>
+    </div>
+    
+
+    {% endblock %}
