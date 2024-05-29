@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect ,get_object_or_404
 from .models import Item ,UserProfile
 from django.shortcuts import get_object_or_404
-from .forms import ItemForm, UserProfileForm ,EmailUpdateForm ,ContactChannelsForm,UserRegistrationForm,f,ItemEditForm,TransferItemForm
+from .forms import ItemForm, UserProfileForm ,EmailUpdateForm ,ContactChannelsForm,UserRegistrationForm,edit_personal_details,TransferItemForm,ItemEditForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.templatetags.static import static
@@ -38,19 +38,19 @@ class LoginView(auth_views.LoginView):
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
-        forms = UserProfileForm(request.POST,request.FILES)
-        if form.is_valid() and forms.is_valid():
+        if form.is_valid() : 
             users=form.save(commit=False) 
             users.save() 
-            forms.save(commit=False).user=users
-            forms.save() 
+            
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
             return redirect('login')
     else:
         form = UserRegistrationForm()
-        forms = UserProfileForm()
-    return render(request, 'registration/register.html', {'form': form,'forms':forms})
+       
+        
+    return render(request, 'registration/register.html', {'form':form})
+
 
 
 
@@ -92,6 +92,7 @@ def create_item(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
+            
             item = form.save(commit=False)
             item.current_owner = user_profile
             item.save()
@@ -123,7 +124,7 @@ def edit_item(request, item_id):
     user_profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        form = ItemForm(request.POST, request.FILES, instance=item)
+        form = ItemEditForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             item = form.save(commit=False)
             item.current_owner = user_profile
@@ -133,7 +134,7 @@ def edit_item(request, item_id):
             messages.success(request, 'Your item has been updated!')
             return redirect('item_list', ct=item.category.name if item.category else '')
     else:
-        form = ItemForm(instance=item)
+        form = ItemEditForm(instance=item)
 
     return render(request, 'edit/edit_item.html', {'form': form, 'item': item})
 
@@ -150,7 +151,7 @@ def delete_item(request, item_id):
         return redirect('item_list')
     return render(request, 'app/delete_item.html', {'item': item})
 
-
+@login_required
 def edit_password(req):
     if req.method == 'POST':
         form = PasswordChangeForm(req.user, req.POST)
@@ -207,13 +208,13 @@ def edit_personal_details(request):
         profile = UserProfile(user=request.user)
     
     if request.method == 'POST':
-        profile_form = f(request.POST, instance=profile)
+        profile_form = edit_personal_details(request.POST, instance=profile)
         if profile_form.is_valid():
             profile_form.save()
             messages.success(request, 'Your personal details have been updated.')
             return redirect('create_profile')  
     else:
-        profile_form = f(instance=profile)
+        profile_form = edit_personal_details(instance=profile)
 
     return render(request, 'edit/edit_personal_details.html', {'profile_form': profile_form})
 
@@ -257,14 +258,12 @@ def transfer_item(request):
             item.current_owner = new_owner
             item.save()
             
-            
             profile = request.user.userprofile
             profile.transferred_items_count += 1
             profile.save()
 
-            messages.success(request, f"Item '{item.serial_number}' has been transferred to {new_owner.user.username}.")
-            return redirect('transfer_item')
-        
+            
+            return redirect('item_list', item.id)
     else:
         form = TransferItemForm()
 

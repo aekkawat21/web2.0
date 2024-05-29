@@ -2,61 +2,92 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Profile</title>
-<link rel="stylesheet" type="text/css" href="{% static 'css/create_profile.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
 </head>
+
 <body>
+  <nav class="w-screen bg-blue-400">
+    <div class="p-2 px-10 flex justify-between">
+      <a href="{% url 'profile' %}">The Real Owner</a>
+      <h2>บัญชี</h2>
+    </div>
+  </nav>
 
-<div class="header">
-  <a href="{% url 'profile' %}">The Real Owner</a>
-  <h2>บัญชี</h2>
-</div>
 
-<div class="card-container">
-  <div class="card">
-    <h3>รายละเอียดส่วนตัว</h3>
-    <strong>ชื่อ:</strong> {{ profile.name}}<br>
-    <div class="info">
-      <strong>อายุ:</strong> {{ profile.age }}<br>
-      <strong>เพศ:</strong> {{ profile.gender }}<br>
+
+  <div class="flex justify-center my-10">
+    <div class="grid grid-cols-2 gap-10 ">
+      <div class="border p-10 rounded-lg shadow-lg">
+        <p class="text-lg">รายละเอียดส่วนตัว</p>
+        
+        <div class="grid grid-cols-2">
+          <strong>ชื่อ:</strong> {% if profile.name %}{{ profile.name }}{% else %}ไม่มีข้อมูล{% endif %}
+          <strong>อายุ:</strong> {% if profile.age %}{{ profile.age }}{% else %}ไม่มีข้อมูล{% endif %}
+          <strong>เพศ:</strong> {% if profile.gender %}{{ profile.gender }}{% else %}ไม่มีข้อมูล{% endif %}
+        </div>
+        <div class=" mt-10  ">
+          <a href="{% url 'edit_personal_details' %}"
+            class="border-2 border-[#71aaf0] p-2 bg-[#94c0f4] rounded-lg hover:bg-blue-400 ">แก้ไข</a>
+        </div>
       </div>
-      <a href="{% url 'edit_personal_details' %}">แก้ไข</a>
-    
+
+      <div class="border p-10 rounded-lg shadow-lg">
+        <p class="text-lg">อีเมล์</p>
+        <strong>อีเมล:</strong> {% if profile.user.email %}{{ profile.user.email }}{% else %}ไม่มีข้อมูล{% endif %}<div
+          class=" mt-10  ">
+          <a href="{% url 'edit_email' %}"
+            class="border-2 border-[#71aaf0] p-2 bg-[#94c0f4] rounded-lg hover:bg-blue-400 ">แก้ไข</a>
+        </div>
+      </div>
+
+      <div class="border p-10 rounded-lg shadow-lg">
+        <p class="text-lg">ช่องทางติดต่อ</p>
+        <strong>หมายเลขโทรศัพท์:</strong> {% if profile.phone_number %}{{ profile.phone_number }}{% else %}ไม่มีข้อมูล
+        {% endif %}<div class=" mt-10  ">
+          <a href="{% url 'edit_contact_channels' %}"
+            class="border-2 border-[#71aaf0] p-2 bg-[#94c0f4] rounded-lg hover:bg-blue-400 ">แก้ไข</a>
+        </div>
+      </div>
+
+      <div class="border p-10 rounded-lg shadow-lg">
+        <p class="text-lg">แก้ไขรหัสผ่าน</p>
+        <strong>รหัสผ่านใหม่:</strong> {% if profile.password %}{{ profile.password }}{% else %}ไม่มีข้อมูล
+        {% endif %}
+        <div class=" mt-10  ">
+          <a href="{% url 'edit_password' %} "
+            class="border-2 border-[#71aaf0] p-2 bg-[#94c0f4] rounded-lg hover:bg-blue-400 ">แก้ไข</a>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <div class="card">
-    <h3>อีเมล์</h3>
-    <strong>อีเมล:</strong> {{ profile.user.email }}<br>
-    <a href="{% url 'edit_email' %}">แก้ไข</a>
-  </div>
-  <div class="card">
-    <h3>ช่องทางติดต่อ</h3>
-    <strong>หมายเลขโทรศัพท์:</strong> {{ profile.phone_number }}<br>
-    <a href="{% url 'edit_contact_channels' %}">แก้ไข</a>
-  </div>
-  <div class="card">
-    <h3>แก้ไขรหัสผ่าน</h3>
-    <strong>รหัสผ่านใหม่</strong> {{ profile.password }}<br>
-    <a href="{% url 'edit_password' %}">แก้ไข</a>
-  </div>
-</div>
 
 
 
-{% if profile.picture %}
-    <img src="{{ profile.picture.url }}" alt="Profile picture">
-{% else %}
-    <img src="{% static 'images/default-profile-picture.jpg' %}" alt="Default profile picture">
-{% endif %}
-<a class="circle" href="{% url 'edit_profile' %}"> แก้ไข </a>
-    
-    
-    
-      
-  </div> 
+
+  <div class="flex justify-center">
+    <a class="hover:scale-150 mt-16 absolute" href="{% url 'edit_profile' %}"><i
+        class="fa-solid fa-camera text-2xl text-black"></i></a>
+    {% if profile.picture %}
+    <img src="{{ profile.picture.url }}" alt="Profile picture"
+      class="border-2 h-24 w-24 rounded-full border-[#000] object-cover">
+    {% else %}
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Default profile picture"
+      class="border-2 h-24 w-24 border-[#000] rounded-full object-cover">
+    {% endif %}
+
+  </div>
+
 </body>
-</html>
 
+</html>
 {% endblock %}

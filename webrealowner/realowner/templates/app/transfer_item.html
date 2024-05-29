@@ -1,66 +1,44 @@
+{% load static %}
+
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transfer Item Ownership</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        .container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-    </style>
+    <title>โอนย้ายข้อมูล</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
 </head>
 <body>
-    <div class="container">
-        <h2>Transfer Item Ownership</h2>
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Transfer Ownership</button>
-        </form>
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    </div>
+
+  <div class="mt-10 flex justify-center">
+      <div class=" w-3/4 flex justify-center rounded-lg shadow-lg border">
+          <div class="p-5">
+              <p class="text-lg">โอนย้ายข้อมูล</p>
+              <form method="POST" enctype="multipart/form-data" class=" mt-10 text-sm">
+                  {% csrf_token %}
+                  <div class="grid grid-cols-1 gap-5">
+                      {{ form|crispy }}
+                  </div>
+                  <div class=" grid  gap-5 ">
+                      <button type="submit"class="w-full bg-blue-500  text-white p-2 rounded hover:bg-blue-600">บันทึก</button>
+                      
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+
+
+
+
 </body>
 </html>
+

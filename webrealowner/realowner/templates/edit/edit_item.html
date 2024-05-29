@@ -1,20 +1,57 @@
 {% load static %}
-{% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/edit_item.css' %}">
-  <h1>แก้ไขไอเท็ม</h1>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save changes</button>
-  </form>
 
-  <h2>Current Owner: {{ item.current_owner.user.username }}</h2>
-  <h3>Previous Owners</h3>
-  <ul>
-    {% for owner in item.previous_owners.all %}
-      <li>{{ owner.user.username }}</li>
-    {% endfor %}
-</ul>
+{% load crispy_forms_tags %}
 
-  <a href="{% url 'transfer_item' %}" class="button">Transfer Item Ownership</a>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แก้ไขอุปกรณ์</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+</head>
+
+<body>
+
+  <div class="mt-10 flex justify-center">
+    <div class=" w-3/4 flex justify-center rounded-lg shadow-lg border">
+      <div class="p-5">
+        <p class="text-lg">แก้ไขอุปกรณ์</p>
+        <form method="POST" enctype="multipart/form-data" class=" mt-10 text-sm">
+          {% csrf_token %}
+          <div class="grid grid-cols-3 gap-5">
+            {{ form|crispy }}
+          </div>
+          <div class=" grid  gap-5 ">
+            <p>Current Owner: {{ item.current_owner.user.username }}</p>
+            <p>Previous Owners</p>
+            <ul>
+              {% for owner in item.previous_owners.all %}
+              <li>{{ owner.user.username }}</li>
+              {% endfor %}
+            </ul>
+            <div class="flex justify-between p-10 ">
+              <div>
+                <a href="{% url 'transfer_item' %}"
+                  class="button w-full bg-blue-500  text-white p-2 rounded hover:bg-blue-600 flex justify-center">โอนย้ายข้อมูล</a>
+              </div>
+              <div>
+                <button type="submit"
+                  class="w-full bg-blue-500  text-white p-2 rounded hover:bg-blue-600">บันทึก</button>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</body>

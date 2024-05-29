@@ -1,41 +1,66 @@
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'item_list.css' %}">
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<a href="{% url 'profile' %}">{{ ct }}</a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Real Owner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'item_list.css' %}">
 
-<div class="items-list">
-  {% for item in items %}
-    <div class="item-card">
-      <div class="item-image">
-        {% if item.image %}
-          <img src="{{ item.image.url }}" alt="{{ item.model }}">
-        {% else %}
-          <div class="placeholder"></div>
-        {% endif %}
-      </div>
-      <div class="item-details">
-        <h3>{{ item.brand }}</h3>
-        <p>Model: {{ item.model }}</p>
-        <p>Serial: {{ item.serial_number }}</p>
-        <p>Color: {{ item.color }}</p>
-        <p>Category: {{ item.category.name }}</p>
-        <h1>ประวัติ</h1>
-        <p>Store Date of Purchase: {{ item.store_date_of_purchase }}</p>
-        <p>Store of Purchase: {{ item.store_of_purchase }}</p>
-        <p>Warranty: {{ item.warranty }}</p>
-        <p>Previous Owner: {{ item.previous_owner }}</p>
-        <p>Description: {{ item.description }}</p>
+</head>
 
-        {% for owner in item.previous_owners.all %}
-          <p>{{ owner.user.username }}</p>
-        {% endfor %}      
-      </div>
-      <a class="edit-button" href="{% url 'edit_item' item.id %}">แก้ไข</a>
-      <a href="{% url 'profile' %}">ย้อนกลับ</a>
+<body class="bg-gray-100 text-gray-900">
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">The Real Owner</h1>
+
+    <div class=" text-xl font-semibold mb-4 p-5">
+      <a href="{% url 'profile' %} ">{{ ct }}</a>
     </div>
-  {% empty %}
-    <p>คุณยังไม่มีไอเท็มที่ลงทะเบียน.</p>
-  {% endfor %}
-</div>
-{% endblock %}
+
+        <div class="grid grid-cols-2 p-5 gap-5 rounded-lg  ">
+
+          {% if items %}
+            {% for item in items %}
+              <div class="grid grid-cols-2 m-10 p-5 gap-5 border shadow-lg rounded-lg">
+                <div>
+                  <p class="mb-2">แบร์น: {{ item.brand }}</p>
+                  <p class="mb-2">รุ่น: {{ item.model }}</p>
+                  <p class="mb-2">ซีเรียลนัมเบอร์: {{ item.serial_number }}</p>
+                  <p class="mb-2">สี: {{ item.color }}</p>
+                  <p class="mb-2">ประเภท: {{ item.category.name }}</p>
+                  <p class="mb-2">วันที่ซื้อ: {{ item.store_date_of_purchase }}</p>
+                  <p class="mb-2">ร้านที่ซื้อ: {{ item.store_of_purchase }}</p>
+                  <p class="mb-2">การรับประกัน: {{ item.warranty }}</p>
+                  <p class="mb-2">เจ้าของคนก่อน: {{ item.previous_owner }}</p>
+                  {% for owner in item.previous_owners.all %}
+                    <p>{{ owner.user.username }}</p>
+                  {% endfor %}
+                </div>
+
+                <div class="bg-white overflow-hidden">
+                  {% if item.image %}
+                    <div class="w-full h-60 overflow-hidden border border-[#000] rounded-lg shadow-2xl">
+                      <img src="{{ item.image.url }}" alt="{{ item.model }}" class="w-60 h-60 object-cover">
+                    </div>
+                  {% else %}
+                    <span>รูป</span>
+                  {% endif %}
+                </div>
+
+                <div class="flex justify-end">
+                  <a href="{% url 'edit_item' item.id %}" class="bg-blue-500 text-white py-2 px-4 rounded-lg mr-2">แก้ไข</a>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p>คุณยังไม่มีไอเท็มที่ลงทะเบียน.</p>
+          {% endif %}
+        </div>
+
+  </div>
+</body>
+
+</html>

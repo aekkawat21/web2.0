@@ -1,59 +1,50 @@
-{% block content %}
-<script src="https://cdn.tailwindcss.com"></script>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Real Owner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="HTML, CSS">
 </head>
-<body class="bg-white container mx-auto mt-8 px-6">
-
-    <div class="header bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc]  ">
-      <div class="title ">The Real Owner</div>
-      <div class="auth">
-        <a href="{% url 'register' %}" class="button">สร้างบัญชี</a> 
-         <a href="{% url 'login' %}" class="button">เข้าสู่ระบบ</a>
-      </div>
-    </div>
-
-    <form method="GET" action="{% url 'home' %}" class="mb-4">
-      <input type="text" name="search" placeholder="ค้นหาชื่อรุ่น..." class="bg-gray-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300">
-      <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2 hover:bg-indigo-600">ค้นหา</button>
-    </form>
-
-    <div class="main-content ">
-      <div class="message-box bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc] ">
-        <p>เว็บไซต์สำหรับลงทะเบียนอุปกรณ์ของคุณ ที่เอาไว้ช่วยจำข้อมูลอุปกรณ์ของคุณ</p>
-        <a href="{% url 'register' %}" class="btn  bg-gradient-to-r from-[#4facfe] to-[#00f2fe] hover:from-[#a6c0fe] hover:to-[#e0c3fc]">สร้างบัญชี</a>
-      </div>
-    </div>
-
-    <div class="container mx-auto mt-8 px-6">
-
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 ">
-            {% for item in items %}
-            
-            <div class=" rounded-lg shadow-lg overflow-hidden pt-10 px-8 bg-gradient-to-r from-[#e0c3fc] to-[#8ec5fc]">
-                <div class="flex justify-center">
-                    {% if item.image %}
-                    <img src="{{ item.image.url }}" alt="Profile Picture" class="rounded h-30 w-30 object-cover">
-                    {% endif %}
-                </div>
-                <div class="p-4">
-                  <p class="text-center text-gray-800 font-semibold">ชื่อ: {{ item.current_owner.user.name }}</p>
-                  <p class="text-center text-gray-800 font-semibold">ชื่อรุ่น: {{ item.model }}</p>
-                  <p class="text-center text-gray-600">เบอร์โทร: {{ item.current_owner.user.phone_number }}</p>
-              </div>
+<body class="bg-[#ffffff] text-gray-900">
+    <div class=" ">
+        <header class="flex justify-between items-center mb-8 py-4 bg-blue-500 ">
+            <h1 class="text-2xl font-bold mx-5 ">The Real Owner</h1>
+            <div>
+                <a href="{% url 'register' %}" class="bg-[#94c0f4] text-black px-4 py-1 rounded-md ml-2 hover:bg-indigo-600 mx-5">สร้างบัญชี</a>
+                <a href="{% url 'login' %}" class="bg-[#94c0f4] text-black px-4 py-1 rounded-md ml-2 hover:bg-indigo-600 mx-5">ลงทะเบียน</a>
             </div>
-            {% endfor %}
-            
-            {% if items.count == 0 %}
-            <p class="text-gray-800 text-center">ไม่พบไอเท็มที่ค้นหา</p>
-            {% endif %}
-        </div>
+        </header>
+        <main>
+            <div class="flex justify-center mb-4">
+                <form method="GET" action="{% url 'home' %}" class="mb-4">
+                    <input type="text" name="search" placeholder="ค้นหาชื่อรุ่น..." class="bg-gray-200 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                    <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2 hover:bg-indigo-600">ค้นหา</button>
+                </form>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 mx-5">
+                {% for item in items %}
+                <div class="bg-[#94c7f3] p-4 rounded shadow">
+                    <div class="mb-4 flex items-center justify-center">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="Profile Picture" class="rounded h-48 w-48 object-cover">
+                        {% endif %}
+                    </div>
+                    <div class="text-center">
+                        <p>ชื่อ: {{ item.current_owner.user.name }}</p>
+                        <p>ชื่อรุ่น: {{ item.model }}</p>
+                        <p>เบอร์โทร: {{ item.current_owner.user.phone_number }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% if items.count == 0 %}
+                <p class="text-gray-800 text-center">ไม่พบไอเท็มที่ค้นหา</p>
+                {% endif %}
+            </div>
+        </main>
     </div>
 </body>
-{% endblock %}
+</html>

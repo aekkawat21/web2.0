@@ -41,7 +41,7 @@ class UserProfile(models.Model):
 
 
 class Item(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,blank=True, null=True)
+    #user = models.ForeignKey(UserProfile, on_delete=models.CASCADE,blank=True, null=True,related_name='item_user')
     brand = models.CharField(max_length=255,null=True,blank=True)
     model = models.CharField(max_length=255,null=True,blank=True)
     color = models.CharField(max_length=255,null=True,blank=True)
@@ -53,10 +53,13 @@ class Item(models.Model):
     warranty = models.TextField(null=True,blank=True)
     previous_owner = models.CharField(max_length=100,null=True,blank=True)
     description = models.TextField(null=True,blank=True)
-    current_owner = models.ForeignKey(UserProfile, related_name='owned_items', on_delete=models.SET_NULL, null=True, blank=True)
-    previous_owners = models.ManyToManyField(UserProfile, related_name='previous_owned_items', blank=True)
+    #current_owner = models.ForeignKey(UserProfile, related_name='owned_items', on_delete=models.SET_NULL, null=True, blank=True)
+    #previous_owners = models.ManyToManyField(UserProfile, related_name='previous_owned_items', blank=True)
    
-    
     def __str__(self):
         return f"{self.brand} {self.model} Item {self.id} - {self.serial_number}"
     
+class OwnerLog(models.Model):
+    owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE,blank=True, null=True,related_name='owner_Log')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE,blank=True, null=True,related_name='item_log')
+    stamp = models.models.DateField(default=timezone.now)
