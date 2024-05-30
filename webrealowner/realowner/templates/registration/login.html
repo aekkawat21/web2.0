@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  {% load static %}
+{% load static %}
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +14,16 @@
   <div class="h-screen mx-auto w-screen grid grid-cols-2">
     <div class="bg-blue-500 flex justify-center items-center">
       <div class="bg-blue-500 text-white p-8 flex flex-col items-center justify-center w-full rounded-l-lg">
-        <div class="bg-gray-300 rounded-full w-32 h-32 mb-4">
+        <div class="bg-gray-300 rounded-full w-32 h-32 mb-4 p-1" style="background-color: white;">
           {% if profile.picture %}
-          <img src="{{ profile.picture.url }}" alt="Profile picture" class="rounded-full h-full w-full object-cover">
-        {% else %}
-          <img src="{% static 'images/default-profile-picture.jpg' %}" alt="Default profile picture" class="rounded-full h-full w-full object-cover">
-        {% endif %}</div>
-        <h2 class="text-2xl font-bold">The Real Owner</h2>
-        <p class="mt-2">Welcome to you.</p>
+          <img src="{{ profile.picture.url }}" alt="Profile picture" class="rounded-full h-full w-full object-cover border border-white">
+          {% else %}
+          <img src="{% static 'images/logo.png' %}" alt="Default profile picture" class="rounded-full h-full w-full object-cover border border-white">
+          {% endif %}
+        </div>
+        
+        <h2 class="text-2xl font-bold">Welcome to The Real Owner</h2>
+        
       </div>
     </div>
     <div class="bg-white flex justify-center items-center">

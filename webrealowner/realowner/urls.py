@@ -13,11 +13,9 @@ urlpatterns = [
     path('edit_email/', views.edit_email, name='edit_email'),
     path('edit_password/',views.edit_password,name='edit_password'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
-
-    path('item-list/', views.item_list, name='item_list_no_ct'),
+    path('item-list/', views.profile, name='item_list_no_ct'),
     path('item-list/<str:ct>/', views.item_list, name='item_list'),
-    
-    path('transfer/', views.transfer_item, name='transfer_item'),
+    path('transfer/<int:item_id>/', views.transfer_item, name='transfer_item'),
     path('create/',views.create_item, name='create_item'),
     path('edit-item/<int:item_id>/', views.edit_item, name='edit_item'),
     path('items/delete/<int:item_id>/', views.delete_item, name='delete_item'),

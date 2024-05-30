@@ -3,10 +3,21 @@ from .models import *
 
 # Register your models here.
 
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'name', 'email', 'age', 'gender', 'phone_number', 'transferred_items_count')
+    search_fields = ('name', 'email', 'phone_number')
+    list_filter = ('gender', 'age')
+    fieldsets = (
+        (None, {
+            'fields': ('user', 'name', 'email', 'age', 'gender', 'phone_number')
+        }),
+        ('Advanced options', {
+            'classes': ('collapse',),
+            'fields': ('picture', 'transferred_items_count'),
+        }),
+    )
 
-admin.site.register(Brand)
-admin.site.register(Category)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, UserProfileAdmin)
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = (
@@ -31,3 +42,10 @@ class ItemAdmin(admin.ModelAdmin):
     ordering = ('-store_date_of_purchase',)
 
 admin.site.register(Item, ItemAdmin)
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name', ) 
+    search_fields = ('name',)  
+
+admin.site.register(Category, CategoryAdmin)    
