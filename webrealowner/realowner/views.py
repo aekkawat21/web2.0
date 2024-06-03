@@ -55,11 +55,9 @@ def register(request):
 def profile(request):
     user = request.user
     profile, created = UserProfile.objects.get_or_create(user=user)
-    
-    # Count items currently owned by the user
     owned_items_count = Item.objects.filter(current_owner=profile).count()
     
-    # Count items transferred by the user
+    # นับรายการที่โอนโดยผู้ใช้
     transferred_items_count = Item.objects.filter(previous_owners=profile).exclude(current_owner=profile).count()
 
     context = {
@@ -128,9 +126,7 @@ def edit_item(request, item_id):
     previous_owners = item.previous_owners.all()
     print("Previous owners in view:")
     for owner in previous_owners:
-        print(owner.user.username)  # Assuming UserProfile has a ForeignKey to User
-
-    if request.method == 'POST':
+      if request.method == 'POST':
         form = ItemEditForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             item = form.save(commit=False)
@@ -141,7 +137,7 @@ def edit_item(request, item_id):
             return redirect('item_list', ct=item.category.name if item.category else '')
     else:
         form = ItemEditForm(instance=item)
-        previous_owners = item.previous_owners.all()  # Ensure previous owners are available for the template
+        previous_owners = item.previous_owners.all()  
 
     return render(request, 'edit/edit_item.html', {'form': form, 'item': item, 'previous_owners': previous_owners})
 
@@ -155,7 +151,6 @@ def transfer_item(request, item_id):
         form = TransferItemForm(request.POST)
         if form.is_valid():
             new_owner_name = form.cleaned_data['new_owner_username']
-            print(f"New owner username: {new_owner_name}")  # Debugging print
             new_owner_user = get_object_or_404(User, username=new_owner_name)
             new_owner_profile = get_object_or_404(UserProfile, user=new_owner_user)
             
@@ -163,16 +158,14 @@ def transfer_item(request, item_id):
                 messages.error(request, "You are not the current owner of this item.")
                 return redirect('item_list_no_ct')
             
-            # Add the current owner to the previous_owners
+            # เพิ่มเจ้าของปัจจุบันไปยัง Previous_owners
             if item.current_owner:
-                print(f"Adding current owner to previous owners: {item.current_owner.user.username}")  # Debugging print
                 item.previous_owners.add(item.current_owner)
             
-            # Update the current_owner to the new owner
+            # อัปเดต current_owner เป็นเจ้าของใหม่
             item.current_owner = new_owner_profile
             item.save()
             
-            print(f"Item transferred to: {new_owner_profile.user.username}")  # Debugging print
             messages.success(request, "Item successfully transferred.")
             return redirect('item_list_no_ct')
     else:
